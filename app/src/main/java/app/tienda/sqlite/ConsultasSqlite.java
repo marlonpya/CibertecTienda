@@ -1,0 +1,147 @@
+package app.tienda.sqlite;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
+
+import app.tienda.modelo.Cliente;
+import app.tienda.modelo.Producto;
+
+/**
+ * Created by marlonpya on 3/12/16.
+ */
+
+public class ConsultasSqlite {
+
+    ControladorSqlite sqlite;
+
+    public ConsultasSqlite(Context context) {
+        this.sqlite = new ControladorSqlite(context);
+    }
+
+    public void registroDeCliente(Cliente cliente) {
+        SQLiteDatabase db = sqlite.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(ControladorSqlite.CLI_NOMBRE, cliente.getNombre());
+        values.put(ControladorSqlite.CLI_APELLIDO, cliente.getApellido());
+        values.put(ControladorSqlite.CLI_CORREO, cliente.getCorreo());
+        values.put(ControladorSqlite.CLI_CONTRASEÑA, cliente.getContraseña());
+        db.insert(ControladorSqlite.TB_CLIENTE, null, values);
+    }
+
+    public void registroVestido(Producto producto) {
+        SQLiteDatabase db = sqlite.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(ControladorSqlite.PRO_NOMBRE, producto.getNombre());
+        values.put(ControladorSqlite.PRO_IMAGEN, producto.getImagen());
+        values.put(ControladorSqlite.PRO_PRECIO, producto.getPrecio());
+        values.put(ControladorSqlite.PRO_COMPRADO, Producto.NO_COMPRADO);
+        db.insert(ControladorSqlite.TB_PRODUCTO, null, values);
+    }
+
+    public boolean verificarCliente(String correo, String contraseña) {
+        SQLiteDatabase db = sqlite.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM TB_CLIENTE " +
+                                    "WHERE "+ControladorSqlite.CLI_CORREO + "= '"+correo + "' " +
+                                    " AND " +ControladorSqlite.CLI_CONTRASEÑA + "= '" + contraseña + "'", null);
+        return cursor.moveToFirst();
+    }
+
+    public ArrayList<Producto> getMisCompras() {
+        ArrayList<Producto> mis_compras = new ArrayList<>();
+        SQLiteDatabase db = sqlite.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM TB_PRODUCTO WHERE PRO_COMPRADO ="+Producto.COMPRADO, null);
+        if (cursor.getCount() > 0) {
+            if (cursor.moveToFirst()) {
+                do {
+                    Producto producto = new Producto(cursor.getInt(cursor.getColumnIndex(ControladorSqlite.PRO_ID)),
+                            cursor.getString(cursor.getColumnIndex(ControladorSqlite.PRO_NOMBRE)),
+                            cursor.getInt(cursor.getColumnIndex(ControladorSqlite.PRO_IMAGEN)),
+                            cursor.getDouble(cursor.getColumnIndex(ControladorSqlite.PRO_PRECIO)),
+                            cursor.getInt(cursor.getColumnIndex(ControladorSqlite.PRO_COMPRADO)));
+                    mis_compras.add(producto);
+                } while (cursor.moveToNext());
+            }
+        }
+        return mis_compras;
+    }
+
+    public ArrayList<Producto> getProductos() {
+        ArrayList<Producto> mis_compras = new ArrayList<>();
+        SQLiteDatabase db = sqlite.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM TB_PRODUCTO", null);
+        if (cursor.getCount() > 0) {
+            if (cursor.moveToFirst()) {
+                do {
+                    Producto producto = new Producto(cursor.getInt(cursor.getColumnIndex(ControladorSqlite.PRO_ID)),
+                            cursor.getString(cursor.getColumnIndex(ControladorSqlite.PRO_NOMBRE)),
+                            cursor.getInt(cursor.getColumnIndex(ControladorSqlite.PRO_IMAGEN)),
+                            cursor.getDouble(cursor.getColumnIndex(ControladorSqlite.PRO_PRECIO)),
+                            cursor.getInt(cursor.getColumnIndex(ControladorSqlite.PRO_COMPRADO)));
+                    mis_compras.add(producto);
+                } while (cursor.moveToNext());
+            }
+        }
+        return mis_compras;
+    }
+
+    public Cliente getCliente(String contraseña) {
+        Cliente cliente = new Cliente();
+        SQLiteDatabase db = sqlite.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM TB_CLIENTE WHERE CLI_CONTRASEÑA = '"+contraseña+"'", null);
+        if (cursor.getCount() > 0) {
+            if (cursor.moveToFirst()) {
+                cliente.setId(cursor.getInt(cursor.getColumnIndex(ControladorSqlite.CLI_ID)));
+                cliente.setNombre(cursor.getString(cursor.getColumnIndex(ControladorSqlite.CLI_NOMBRE)));
+                cliente.setApellido(cursor.getString(cursor.getColumnIndex(ControladorSqlite.CLI_APELLIDO)));
+                cliente.setCorreo(cursor.getString(cursor.getColumnIndex(ControladorSqlite.CLI_CORREO)));
+                cliente.setContraseña(cursor.getString(cursor.getColumnIndex(ControladorSqlite.CLI_CONTRASEÑA)));
+            }
+        }
+        return cliente;
+    }
+
+    public boolean validarVestidosRegistrados() {
+        SQLiteDatabase db = sqlite.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM TB_PRODUCTO", null);
+        return cursor.moveToFirst();
+    }
+
+    public ArrayList<Producto> getProductosNombre(String descripcion) {
+        ArrayList<Producto> mis_compras = new ArrayList<>();
+        SQLiteDatabase db = sqlite.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM TB_PRODUCTO WHERE " +
+                "PRO_NOMBRE like '% "+descripcion+" %' " +
+                "OR PRO_NOMBRE like '"+descripcion+"%' " +
+                "OR PRO_NOMBRE like '% "+descripcion+"' " +
+                "OR PRO_NOMBRE like '"+descripcion+"'", null);
+        if (cursor.getCount() > 0) {
+            if (cursor.moveToFirst()) {
+                do {
+                    Producto producto = new Producto(cursor.getInt(cursor.getColumnIndex(ControladorSqlite.PRO_ID)),
+                            cursor.getString(cursor.getColumnIndex(ControladorSqlite.PRO_NOMBRE)),
+                            cursor.getInt(cursor.getColumnIndex(ControladorSqlite.PRO_IMAGEN)),
+                            cursor.getDouble(cursor.getColumnIndex(ControladorSqlite.PRO_PRECIO)),
+                            cursor.getInt(cursor.getColumnIndex(ControladorSqlite.PRO_COMPRADO)));
+                    mis_compras.add(producto);
+                } while (cursor.moveToNext());
+            }
+        }
+        return mis_compras;
+    }
+
+    public void comprarProducto(Producto producto) {
+        SQLiteDatabase db = sqlite.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(ControladorSqlite.PRO_NOMBRE, producto.getNombre());
+        values.put(ControladorSqlite.PRO_IMAGEN, producto.getImagen());
+        values.put(ControladorSqlite.PRO_PRECIO, producto.getPrecio());
+        values.put(ControladorSqlite.PRO_COMPRADO, Producto.COMPRADO);
+        db.update(ControladorSqlite.TB_PRODUCTO, values, ControladorSqlite.PRO_ID+"="+producto.getId(), null);
+        db.close();
+    }
+
+}

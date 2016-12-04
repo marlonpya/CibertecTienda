@@ -13,6 +13,7 @@
         android:src="@drawable/chica" />
 
     <TextView
+        android:id="@+id/nombre_perfil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -21,6 +22,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/apellido_perfil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -29,6 +31,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/correo_perfil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"

@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import app.tienda.fragment.CompraFragment;
 import app.tienda.fragment.ListaProductosFragment;
 import app.tienda.fragment.PerfilFragment;
 
@@ -28,6 +29,7 @@ public class PrincipalActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -73,8 +75,8 @@ public class PrincipalActivity extends AppCompatActivity
         } else if (id == R.id.nav_productos) {
             fragment = new ListaProductosFragment();
             cambiar = true;
-        } else {
-            fragment = new PerfilFragment();
+        } else if (id == R.id.nav_compras){
+            fragment = new CompraFragment();
             cambiar = true;
         }
         if (cambiar) {

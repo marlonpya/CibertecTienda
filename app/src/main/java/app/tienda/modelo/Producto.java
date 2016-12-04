@@ -5,25 +5,27 @@ package app.tienda.modelo;
  */
 
 public class Producto {
-    public static final int SOMBRERO    = 0;
-    public static final int BLUSA       = 1;
-    public static final int CORREA      = 2;
-    public static final int FALDA       = 3;
-    public static final int PANTALON    = 4;
-    public static final int ZATAPATOS   = 5;
-    public static final int ACCESORIOS  = 6;
+
+    public static final int NO_COMPRADO = 0;
+    public static final int COMPRADO    = 1;
 
     private int id;
     private String nombre;
     private int imagen;
-    private int tipo;
     private double precio;
+    private int comprado;
 
-    public Producto(int id, String nombre, int imagen, int tipo, double precio) {
+    public Producto(int id, String nombre, int imagen, double precio, int comprado) {
         this.id = id;
         this.nombre = nombre;
         this.imagen = imagen;
-        this.tipo = tipo;
+        this.precio = precio;
+        this.comprado = comprado;
+    }
+
+    public Producto(String nombre, int imagen, double precio) {
+        this.nombre = nombre;
+        this.imagen = imagen;
         this.precio = precio;
     }
 
@@ -51,19 +53,19 @@ public class Producto {
         this.imagen = imagen;
     }
 
-    public int getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(int tipo) {
-        this.tipo = tipo;
-    }
-
     public double getPrecio() {
         return precio;
     }
 
     public void setPrecio(double precio) {
         this.precio = precio;
+    }
+
+    public int getComprado() {
+        return comprado;
+    }
+
+    public void setComprado(int comprado) {
+        this.comprado = comprado;
     }
 }
