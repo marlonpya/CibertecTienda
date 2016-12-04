@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import app.tienda.app.MiAplication;
+import app.tienda.modelo.Producto;
 import app.tienda.util.Constantes;
 
 public class InicioActivity extends AppCompatActivity implements View.OnClickListener{
@@ -38,6 +39,8 @@ public class InicioActivity extends AppCompatActivity implements View.OnClickLis
 
         btnRegistrarse.setOnClickListener(this);
         btnIngresar.setOnClickListener(this);
+
+        if (!MiAplication.sqlite.validarVestidosRegistrados()) cargarVestidos();
     }
 
     @Override
@@ -66,5 +69,22 @@ public class InicioActivity extends AppCompatActivity implements View.OnClickLis
         } else {
             Snackbar.make(layout, "CLIENTE NO REGISTRADO", Snackbar.LENGTH_LONG).show();
         }
+    }
+
+
+    private void cargarVestidos() {
+        MiAplication.sqlite.registroVestido(new Producto("Vestido negro floral 1", R.drawable.imagen01, 200.00));
+        MiAplication.sqlite.registroVestido(new Producto("Vestido negro floral 2", R.drawable.imagen_02_vestido_negro, 300.00));
+        MiAplication.sqlite.registroVestido(new Producto("Vestido casual", R.drawable.imagen_03_ropa_chica, 400.00));
+        MiAplication.sqlite.registroVestido(new Producto("Vestido negro boom", R.drawable.imagen_04_vestido_chica, 250.00));
+        MiAplication.sqlite.registroVestido(new Producto("Vestido rojo puas negras", R.drawable.imagen_05_vestido_rojo, 270.00));
+        MiAplication.sqlite.registroVestido(new Producto("Vestido negro lotto", R.drawable.imagen_06_vestido_negro_grande, 120.00));
+        MiAplication.sqlite.registroVestido(new Producto("Vestido rojo compress", R.drawable.imagen_07_vestido_negro_impactante, 530.00));
+        MiAplication.sqlite.registroVestido(new Producto("Vestido negro mallas", R.drawable.imagen_08_vestido_cuadros_plomos, 350.00));
+        MiAplication.sqlite.registroVestido(new Producto("Vestido rojo mediano", R.drawable.imagen_09_vestido_rojo_opaco, 460.00));
+        MiAplication.sqlite.registroVestido(new Producto("Vestido verde flores", R.drawable.imagen_10_vestido_verde, 240.00));
+        MiAplication.sqlite.registroVestido(new Producto("Vestido verde casual", R.drawable.imagen_11_vestido_completo_verde, 530.00));
+        MiAplication.sqlite.registroVestido(new Producto("Vestido rosa y mallas casual", R.drawable.imagen_12_vestido_rosa, 210.00));
+        MiAplication.sqlite.registroVestido(new Producto("Vestido verde bodas", R.drawable.imagen_13_vestido_boda_verde, 540.00));
     }
 }

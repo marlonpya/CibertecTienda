@@ -14,30 +14,32 @@ public class ControladorSqlite extends SQLiteOpenHelper {
     public static final int DB_VERSION = 1;
 
     public static final String TB_PRODUCTO  = "TB_PRODUCTO";
-    public static final String PRO_ID       = "PRO_ID";
+    public static final String PRO_ID       = "_PRO_ID";
     public static final String PRO_NOMBRE   = "PRO_NOMBRE";
     public static final String PRO_IMAGEN   = "PRO_IMAGEN";
     public static final String PRO_PRECIO   = "PRO_PRECIO";
     public static final String PRO_COMPRADO = "PRO_COMPRADO";
     public static final String CREATE_TB_PRODUCTO = "CREATE TABLE " + TB_PRODUCTO +"(" +
-            PRO_ID + " INTEGER AUTO_INCREMENT PRIMARY KEY," +
+            PRO_ID + " INTEGER," +
             PRO_NOMBRE + " TEXT," +
             PRO_IMAGEN + " INTEGER," +
             PRO_PRECIO + " DECIMAL," +
-            PRO_COMPRADO + " INTEGER NOT NULL);";
+            PRO_COMPRADO + " INTEGER DEFAULT 0," +
+            "PRIMARY KEY ("+PRO_ID+"));";
 
     public static final String TB_CLIENTE   = "TB_CLIENTE";
-    public static final String CLI_ID       = "CLI_ID";
+    public static final String CLI_ID       = "_CLI_ID";
     public static final String CLI_NOMBRE   = "CLI_NOMBRE";
     public static final String CLI_APELLIDO = "CLI_APELLIDO";
     public static final String CLI_CORREO   = "CLI_CORREO";
     public static final String CLI_CONTRASEÑA="CLI_CONTRASEÑA";
     public static final String CREATE_TB_CLIENTE = "CREATE TABLE " + TB_CLIENTE + "(" +
-            CLI_ID + " INTEGER AUTO_INCREMENT PRIMARY KEY," +
+            CLI_ID + " INTEGER," +
             CLI_NOMBRE + " TEXT," +
             CLI_APELLIDO + " TEXT," +
             CLI_CORREO + " TEXT," +
-            CLI_CONTRASEÑA + " TEXT);";
+            CLI_CONTRASEÑA + " TEXT," +
+            "PRIMARY KEY("+CLI_ID+"));";
 
     public ControladorSqlite(Context context) {
         super(context, ControladorSqlite.DB_NOMBRE, null, ControladorSqlite.DB_VERSION);
@@ -45,8 +47,8 @@ public class ControladorSqlite extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(ControladorSqlite.CREATE_TB_CLIENTE);
         sqLiteDatabase.execSQL(ControladorSqlite.CREATE_TB_PRODUCTO);
+        sqLiteDatabase.execSQL(ControladorSqlite.CREATE_TB_CLIENTE);
     }
 
     @Override

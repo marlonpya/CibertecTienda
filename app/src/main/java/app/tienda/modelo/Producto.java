@@ -6,8 +6,8 @@ package app.tienda.modelo;
 
 public class Producto {
 
-    public static final int NO_COMPRADO = 0;
-    public static final int COMPRADO    = 1;
+    private static final int NO_COMPRADO = 0;
+    private static final int COMPRADO    = 1;
 
     private int id;
     private String nombre;

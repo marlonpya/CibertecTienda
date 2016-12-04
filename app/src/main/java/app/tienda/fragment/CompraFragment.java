@@ -3,12 +3,14 @@ package app.tienda.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import app.tienda.R;
 import app.tienda.adapter.CompraAdapter;
@@ -38,6 +40,9 @@ public class CompraFragment extends Fragment {
 
         adapter = new ProductoAdapter(getActivity(), mis_compras);
 
+        for (Producto item : mis_compras) {
+            Log.d("CompraFragment", String.valueOf(item.getId())+item.getNombre()+String.valueOf(item.getImagen())+String.valueOf(item.getPrecio())+String.valueOf(item.getPrecio()));
+        }
         listView.setAdapter(adapter);
 
         return view;
