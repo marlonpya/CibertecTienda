@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import app.tienda.app.MiAplication;
 import app.tienda.modelo.Producto;
+import app.tienda.sqlite.ConsultasSqlite;
 import app.tienda.util.Constantes;
 
 public class InicioActivity extends AppCompatActivity implements View.OnClickListener{
@@ -62,6 +63,7 @@ public class InicioActivity extends AppCompatActivity implements View.OnClickLis
     private void ingresarCliente() {
         String correo = etCorreoIngreso.getText().toString().trim();
         String contraseña = etContraseñaIngreso.getText().toString().trim();
+
         if (MiAplication.sqlite.verificarCliente(correo, contraseña)) {
             Toast.makeText(InicioActivity.this, "BIENVENIDO " + correo, Toast.LENGTH_LONG).show();
             startActivity(new Intent(InicioActivity.this, PrincipalActivity.class)

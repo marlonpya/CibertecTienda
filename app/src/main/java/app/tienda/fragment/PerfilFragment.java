@@ -8,14 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import app.tienda.R;
-import app.tienda.adapter.CompraAdapter;
-import app.tienda.adapter.ProductoAdapter;
 import app.tienda.app.MiAplication;
 import app.tienda.modelo.Cliente;
-import app.tienda.modelo.Producto;
 import app.tienda.util.Constantes;
 
 /**

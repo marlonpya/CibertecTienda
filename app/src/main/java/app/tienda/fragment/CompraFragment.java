@@ -10,10 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import app.tienda.R;
-import app.tienda.adapter.CompraAdapter;
 import app.tienda.adapter.ProductoAdapter;
 import app.tienda.app.MiAplication;
 import app.tienda.modelo.Producto;

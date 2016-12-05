@@ -59,6 +59,11 @@ public class ListaProductosFragment extends Fragment {
                     adapter = new ProductoAdapter(getActivity(), productos);
                     lvProductos.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
+                } else {
+                    productos = MiAplication.sqlite.getProductos();
+                    adapter = new ProductoAdapter(getActivity(), productos);
+                    lvProductos.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 }
             }
         });
